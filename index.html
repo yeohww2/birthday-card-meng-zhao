@@ -53,14 +53,14 @@
       0 0 40px rgba(255, 150, 200, 0.3);
   }
 
-.bb-img {
-  width: 45%;
-  max-width: 200px;
-  display: block;
-  margin: 0 auto 20px auto;
-  border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(255, 150, 200, 0.3);
-}
+  .bb-img {
+    width: 45%;
+    max-width: 200px;
+    display: block;
+    margin: 0 auto 20px auto;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(255, 150, 200, 0.3);
+  }
 
   p {
     font-size: 1.08em;
@@ -103,14 +103,40 @@
     0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
     100% { transform: translateY(110vh) rotate(360deg); opacity: 1; }
   }
+
+  /* 右下角音乐按钮 */
+  #music-btn {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    border: none;
+    background: #ffb6d9;
+    box-shadow: 0 4px 12px rgba(255, 120, 170, 0.6);
+    font-size: 22px;
+    line-height: 46px;
+    text-align: center;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 0;
+    z-index: 10;
+  }
+
+  #music-btn:active {
+    transform: scale(0.95);
+  }
 </style>
 </head>
 
 <body>
   <div class="card">
     <div class="ribbon">🎀🎀🎀🎀🎀🎀</div>
-<img src="birthdayboy.png" class="bb-img">
-<p>寶貝啊～生日快樂！🎂💕
+
+    <img src="birthdayboy.png" class="bb-img">
+
+    <p>寶貝啊～生日快樂！🎂💕
 
 這是我第三次陪你過生日。
 我覺得好像才一轉眼，
@@ -142,14 +168,32 @@
     <div class="ribbon-bottom">🎀🎀🎀🎀🎀🎀</div>
   </div>
 
-<audio id="bgm" src="birthdaysong.mp3" autoplay muted></audio>
+<audio id="bgm" src="birthdaysong.mp3"></audio>
+<button id="music-btn">🔈</button>
 
 <script>
   const bgm = document.getElementById("bgm");
-  document.addEventListener("click", function () {
-    bgm.muted = false;
-    bgm.play();
-  }, { once: true });
+  const musicBtn = document.getElementById("music-btn");
+  let isPlaying = false;
+
+  function toggleBgm() {
+    if (!isPlaying) {
+      bgm.play().then(() => {
+        isPlaying = true;
+        musicBtn.textContent = "🔊";
+      }).catch(() => {});
+    } else {
+      bgm.pause();
+      isPlaying = false;
+      musicBtn.textContent = "🔈";
+    }
+  }
+
+  musicBtn.addEventListener("click", toggleBgm);
+  musicBtn.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    toggleBgm();
+  });
 
   const items = ["🍰","🧁","🍓","💗","✨","⭐","🍬","🎀"];
 
@@ -168,4 +212,5 @@
 
 </body>
 </html>
+
 
