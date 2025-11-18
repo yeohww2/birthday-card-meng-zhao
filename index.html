@@ -62,6 +62,25 @@
     box-shadow: 0 4px 12px rgba(255, 150, 200, 0.3);
   }
 
+#voice-btn {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: #ff9ecb;
+  border: none;
+  font-size: 30px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 120, 170, 0.5);
+  cursor: pointer;
+  transition: transform .15s;
+}
+
+#voice-btn:active {
+  transform: scale(0.92);
+}
+
   p {
     font-size: 1.08em;
     line-height: 2em;
@@ -135,6 +154,8 @@
     <div class="ribbon">🎀🎀🎀🎀🎀🎀</div>
 
     <img src="birthdayboy.png" class="bb-img">
+    <button id="voice-btn">💗</button>
+<audio id="voice" src="voicewish.mp3"></audio>
 
     <p>寶貝啊～
     
@@ -209,9 +230,28 @@
   }
 
   setInterval(createFallingItem, 300);
+  const voice = document.getElementById("voice");
+  const voiceBtn = document.getElementById("voice-btn");
+  let voicePlaying = false;
+
+  function toggleVoice() {
+  if (!voicePlaying) {
+    voice.play();
+    voicePlaying = true;
+    voiceBtn.textContent = "💗✨";
+  } else {
+    voice.pause();
+    voicePlaying = false;
+    voiceBtn.textContent = "💗";
+  }
+}
+
+  voiceBtn.addEventListener("click", toggleVoice);
+  voiceBtn.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    toggleVoice();
+  });
 </script>
 
 </body>
 </html>
-
-
