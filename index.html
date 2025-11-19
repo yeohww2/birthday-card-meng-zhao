@@ -123,42 +123,148 @@
     100% { transform: translateY(110vh) rotate(360deg); opacity: 1; }
   }
 
-  /* 右下角音乐按钮 */
-  #music-btn {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    width: 46px;
-    height: 46px;
-    border-radius: 999px;
-    border: none;
-    background: #ffb6d9;
-    box-shadow: 0 4px 12px rgba(255, 120, 170, 0.6);
-    font-size: 22px;
-    line-height: 46px;
-    text-align: center;
-    cursor: pointer;
-    color: #ffffff;
-    padding: 0;
-    z-index: 10;
-  }
 
-  #music-btn:active {
-    transform: scale(0.95);
-  }
+/* 🔒 LOCK SCREEN */
+#lock-screen {
+  position: fixed;
+  inset: 0;
+  background: #ffd9ec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.lock-box {
+  text-align: center;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 22px;
+  border: 3px solid #ffb6d9;
+  box-shadow: 0 8px 20px rgba(255,120,170,0.3);
+  width: 280px;
+  position: relative;
+}
+
+.error-msg {
+  font-size: 0.95em;
+  color: #ff6fa8;
+  height: 20px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.cute-title {
+  font-size: 1.7em;
+  font-weight: 600;
+  color: #ff6fa8;
+  margin-bottom: 6px;
+}
+
+#dots {
+  margin: 14px 0 14px 0;
+}
+
+#dots span {
+  font-size: 26px;
+  color: #ff88b5;
+  margin: 0 4px;
+  opacity: 0.4;
+  transition: 0.2s;
+}
+
+#dots span.filled {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.num-pad {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  gap: 12px;
+  justify-content: center;
+}
+
+.num-pad button {
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: #ffb6d9;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 3px 8px rgba(255,120,170,0.4);
+  transition: 0.15s;
+}
+
+.num-pad button:active {
+  transform: scale(0.9);
+}
+
+#lock-screen.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0px); }
+  25% { transform: translateX(-12px); }
+  50% { transform: translateX(12px); }
+  75% { transform: translateX(-12px); }
+  100% { transform: translateX(0px); }
+}
+
+.heart-fall {
+  position: fixed;
+  top: -30px;
+  font-size: 26px;
+  animation: heartDrop 1.4s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes heartDrop {
+  0% { transform: translateY(-30px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(80vh) rotate(360deg); opacity: 0; }
+}
+
 </style>
 </head>
 
 <body>
-  <div class="card">
-    <div class="ribbon">🎀🎀🎀🎀🎀🎀</div>
 
-    <img src="birthdayboy.png" class="bb-img">
-    <button id="voice-btn">💗</button>
-<audio id="voice" src="voicewish.m4a"></audio>
+<div id="lock-screen">
+  <div class="lock-box">
+    <div class="error-msg" id="error"> </div>
+    <h2 class="cute-title">🔒</h2>
 
-    <p>寶貝啊～
-    
+    <div id="dots">
+      <span>♡</span><span>♡</span><span>♡</span><span>♡</span><span>♡</span><span>♡</span>
+    </div>
+
+    <div class="num-pad">
+      <button>0</button><button>1</button><button>2</button>
+      <button>3</button><button>4</button><button>5</button>
+      <button>6</button><button>7</button><button>8</button>
+      <button>9</button>
+      <button id="clear">←</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="ribbon">🎀🎀🎀🎀🎀🎀</div>
+
+  <img src="birthdayboy.png" class="bb-img">
+  <button id="voice-btn">💗</button>
+  <audio id="voice" src="voicewish.m4a"></audio>
+
+  <p>寶貝啊～
+
 生日快樂！🎂💕
 這是我第三次陪你過生日。
 我覺得好像才一轉眼，
@@ -183,58 +289,118 @@
 我们一定要一直走到
 很久很久以後 (๑•͈ᴗ•͈)💞</p>
 
-    <div class="signature">你的寶貝雯 上💕</div>
-
-    <div class="cute">(๑˃̵ᴗ˂̵)ﻭ❤️</div>
-
-    <div class="ribbon-bottom">🎀🎀🎀🎀🎀🎀</div>
-  </div>
+  <div class="signature">你的寶貝雯 上💕</div>
+  <div class="cute">(๑˃̵ᴗ˂̵)ﻭ❤️</div>
+  <div class="ribbon-bottom">🎀🎀🎀🎀🎀🎀</div>
+</div>
 
 <audio id="bgm" src="birthdaysong.mp3"></audio>
 <button id="music-btn">🔈</button>
 
+
 <script>
-  const bgm = document.getElementById("bgm");
-  const musicBtn = document.getElementById("music-btn");
-  let isPlaying = false;
+const correctCode = ["0","0","1","1","2","4"];
+let input = [];
+const lock = document.getElementById("lock-screen");
+const dots = document.querySelectorAll("#dots span");
+const errorMsg = document.getElementById("error");
 
-  function toggleBgm() {
-    if (!isPlaying) {
-      bgm.play().then(() => {
-        isPlaying = true;
-        musicBtn.textContent = "🔊";
-      }).catch(() => {});
-    } else {
-      bgm.pause();
-      isPlaying = false;
-      musicBtn.textContent = "🔈";
+function dropHearts() {
+  const options = ["💗","💕","💖","💞","💓","💝"];
+  for (let i = 0; i < 8; i++) {
+    const h = document.createElement("div");
+    h.className = "heart-fall";
+    h.innerText = options[Math.floor(Math.random()*options.length)];
+    h.style.left = Math.random()*100 + "vw";
+    h.style.fontSize = (20 + Math.random()*20) + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1500);
+  }
+}
+
+document.querySelectorAll(".num-pad button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const val = btn.textContent;
+
+    if (val === "←") {
+      if (input.length > 0) {
+        input.pop();
+        dots[input.length].classList.remove("filled");
+      }
+      return;
     }
-  }
 
-  musicBtn.addEventListener("click", toggleBgm);
-  musicBtn.addEventListener("touchstart", function(e) {
-    e.preventDefault();
-    toggleBgm();
+    if (input.length < 6) {
+      input.push(val);
+      dots[input.length - 1].classList.add("filled");
+    }
+
+    if (input.length === 6) {
+      if (input.join("") === correctCode.join("")) {
+        lock.style.opacity = "0";
+        setTimeout(() => lock.style.display = "none", 500);
+      } else {
+        lock.classList.add("shake");
+        errorMsg.textContent = "輸錯啦 ~ ~ ♡";
+        errorMsg.style.opacity = "1";
+        dropHearts();
+
+        setTimeout(() => {
+          errorMsg.style.opacity = "0";
+        }, 1200);
+
+        setTimeout(() => {
+          lock.classList.remove("shake");
+        }, 400);
+
+        input = [];
+        dots.forEach(d => d.classList.remove("filled"));
+      }
+    }
   });
+});
 
-  const items = ["🍰","🧁","🍓","💗","✨","⭐","🍬","🎀"];
 
-  function createFallingItem() {
-    const el = document.createElement("div");
-    el.className = "fall";
-    el.innerText = items[Math.floor(Math.random() * items.length)];
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = 3 + Math.random() * 3 + "s";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 6000);
+const bgm = document.getElementById("bgm");
+const musicBtn = document.getElementById("music-btn");
+let isPlaying = false;
+
+function toggleBgm() {
+  if (!isPlaying) {
+    bgm.play().then(() => {
+      isPlaying = true;
+      musicBtn.textContent = "🔊";
+    }).catch(() => {});
+  } else {
+    bgm.pause();
+    isPlaying = false;
+    musicBtn.textContent = "🔈";
   }
+}
 
-  setInterval(createFallingItem, 300);
-  const voice = document.getElementById("voice");
-  const voiceBtn = document.getElementById("voice-btn");
-  let voicePlaying = false;
+musicBtn.addEventListener("click", toggleBgm);
 
-  function toggleVoice() {
+
+const items = ["🍰","🧁","🍓","💗","✨","⭐","🍬","🎀"];
+
+function createFallingItem() {
+  const el = document.createElement("div");
+  el.className = "fall";
+  el.innerText = items[Math.floor(Math.random() * items.length)];
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.animationDuration = 3 + Math.random() * 3 + "s";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 6000);
+}
+
+setInterval(createFallingItem, 300);
+
+
+const voice = document.getElementById("voice");
+const voiceBtn = document.getElementById("voice-btn");
+let voicePlaying = false;
+
+function toggleVoice() {
   if (!voicePlaying) {
     voice.play();
     voicePlaying = true;
@@ -246,11 +412,8 @@
   }
 }
 
-  voiceBtn.addEventListener("click", toggleVoice);
-  voiceBtn.addEventListener("touchstart", function(e) {
-    e.preventDefault();
-    toggleVoice();
-  });
+voiceBtn.addEventListener("click", toggleVoice);
+
 </script>
 
 </body>
