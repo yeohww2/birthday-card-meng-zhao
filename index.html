@@ -2,7 +2,8 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" 
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
@@ -208,6 +209,15 @@
 
 #lock-screen.shake {
   animation: shake 0.3s;
+}
+
+button {
+  font-size: 20px;   /* Must be >= 16px to stop zoom */
+  touch-action: manipulation; /* Disable double-tap */
+}
+
+.num-pad button {
+  touch-action: manipulation;
 }
 
 @keyframes shake {
@@ -441,4 +451,3 @@ voiceBtn.addEventListener("click", toggleVoice);
 
 </body>
 </html>
-
